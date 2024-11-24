@@ -31,11 +31,6 @@ type Rsp struct {
 	RspBodyLen  int    `json:"rsp_body_len"`
 }
 
-var (
-	registerUsersCounter      int
-	registerAdminsCounter     int
-)
-
 func detectBolaAttacks(logFilePath string) error {
 	logData, err := os.Open(logFilePath)
 	if err != nil {
@@ -53,11 +48,9 @@ func detectBolaAttacks(logFilePath string) error {
 		if len(line) > 0 {
             spaceIndex1 := strings.Index(line, " ")
             if spaceIndex1 != -1 {
-                // Look for the second space after the first space
                 spaceIndex2 := strings.Index(line[spaceIndex1+1:], " ")
                 if spaceIndex2 != -1 {
-                    // Remove both the timestamp and everything up to the second space
-                    line = line[spaceIndex1+spaceIndex2+2:] // Add 2 to account for the spaces
+                    line = line[spaceIndex1+spaceIndex2+2:]
                 }
             }
         }
@@ -81,7 +74,6 @@ func detectBolaAttacks(logFilePath string) error {
 	
 	for _, logEntry := range logs {
 		urlStr := logEntry.Req.URL
-		// authHeader := logEntry.Req.Headers
 	
 		parsedURL, err := url.Parse(urlStr)
 		if err != nil {
@@ -118,7 +110,6 @@ func handleBalance(logEntry LogEntry, parsedURL *url.URL) {
 		}
 	}
 }
-
 
 func main() {
 	if len(os.Args) < 2 {
