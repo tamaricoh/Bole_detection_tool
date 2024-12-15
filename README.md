@@ -4,7 +4,7 @@ This tool parses server logs to detect **Broken Object Level Authorization (BOLA
 
 The utility is covering two potential BOLA attacks surfaces. One, is an attempt made by the user to perform an API operation which is permitted only for admin role. Second, is an attempt by a user to perform `getBalance` API operation of an account that does not belong to the user.
 
-In both cases, the utility is searching for a `Unautorized 403` responses and prints the appropriate error message to indicate that access is forbidden, helping to identify potential unauthorized access attempts. The utility differentiates between the types of attacks by the URL. For example, an unauthorized GET request with URL of `/balance?user_id=<number>` points at an attempt of a user trying to accsess another user info.
+In both cases, the utility is searching for a `200` responses, helping to identify unauthorized access. The utility differentiates between the types of attacks by the URL. For example, an unauthorized GET request with URL of `/balance?user_id=<number>` points at an attempt of a user trying to accsess another user info.
 
 ## Additional potential attack surfaces to cover next (not yet implemented)
 
