@@ -94,7 +94,7 @@ func detectBolaAttacks(logFilePath string) error {
 }
 
 func handleAdminAccess(logEntry LogEntry, parsedURL *url.URL) {
-	if logEntry.Rsp.StatusCode == 403 {
+	if logEntry.Rsp.StatusCode == 200 {
 		fmt.Printf("Unauthorized access attempt: request type: %s, endpoint: %s. A regular user is trying to perform admin actions.\n", logEntry.Req.Method, parsedURL.Path)
 	}
 }
@@ -102,7 +102,7 @@ func handleAdminAccess(logEntry LogEntry, parsedURL *url.URL) {
 func handleBalance(logEntry LogEntry, parsedURL *url.URL) {
 	queryParams := parsedURL.Query()
 	userID := queryParams.Get("user_id")
-	if logEntry.Rsp.StatusCode == 403 {
+	if logEntry.Rsp.StatusCode == 200 {
 		if userID != "" {
 			fmt.Printf("Unauthorized access attempt: Someone without authorization tried to get the balance of the account belonging to user_id: %s\n", userID)
 		} else {
